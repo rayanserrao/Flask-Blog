@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<hr>
+<h2>Edit Post</h2>
+<form action="/edit/{{post.id}}" method="POST">
+  <div class="form-group">
+    <div class="col">
+      <input type="text" class="form-control" name="title" id="title" placeholder="Title"  value="{{post.title}}" required  >
+    </div>
+    <br>
+    <div class="col">
+      <input type="text"  class="form-control"  name="content"  id="content"  placeholder="Content" value="{{post.content}}" required>
+
+    </div>  
+    <br>
+    <div class="col">
+      <input type="text" class="form-control" name="author" id="author" placeholder="Author Name" value="{{post.author}}" required>
+    </div>
+    <br>
+    
+    <div class="col">
+      <input type="submit" class="btn btn-primary" value="Save" >
+    </div>
+  </div>
+</form>
+</div>
+
+<hr>
+{% endblock %}

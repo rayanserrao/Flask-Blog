@@ -41,14 +41,14 @@ def about():
 
 @app.route('/post',methods=['POST','GET'])
 def post():
-    if request.method=='POST':
+    if request.method=='POST':                  # if your posting /putting some data to form
         post_title=request.form['title']
         post_content=request.form['content']
         post_author=request.form['author']
-        new_post=Posts(title=post_title,content=post_content,author=post_author)
-        db.session.add(new_post)
-        db.session.commit()
-        return redirect('/post')
+        new_post=Posts(title=post_title,content=post_content,author=post_author)  #creating new post
+        db.session.add(new_post)     #add into session the post created, it will be delted after this session
+        db.session.commit()         #to save it permamnemtly u need to commit the changes
+        return redirect('/post')    #which page u wnat to redirect to
     else:
         all_post=Posts.query.order_by(Posts.date).all()
         return render_template('post.html',all_post=all_post)
@@ -56,6 +56,28 @@ def post():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    post=Posts.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/post')
+
+@app.route('/edit/<int:id>', methods=['GET','POST']) 
+def edit(id):
+    if request.method=='POST':
+
+        post=Posts.query.get_or_404(id)
+        post.title=request.form['title']
+        post.content=request.form['content']
+        post.author=request.form['author']
+        db.session.commit()
+        return redirect('/post')
+    else:
+        post=Posts.query.get_or_404(id)
+        return render_template('edit.html', post=post)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
