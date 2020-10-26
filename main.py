@@ -78,6 +78,24 @@ def edit(id):
         post=Posts.query.get_or_404(id)
         return render_template('edit.html', post=post)
 
+@app.route('/post/newpost',methods=['GET','POST'])
+def newpost():
+    if request.method=='POST':
+
+        
+        post.title=request.form['title']
+        post.content=request.form['content']
+        post.author=request.form['author']
+        new_post=Posts(title=post_title,content=post_content,author=post_author)
+        db.session.add(new_post) 
+        db.session.commit()
+        return redirect('/post')
+    else:
+        
+        return render_template('new_post.html')
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
