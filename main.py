@@ -8,6 +8,7 @@ app=Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///posts.db'   #confirguring databse with relative path(///)
                                                          #if i give 4 slahesit will be absolute path
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///contacts.db'
 
 db = SQLAlchemy(app)  #creating databse
 
@@ -21,6 +22,26 @@ class Posts(db.Model):
 
     def __repr__(self) :   #this method gonna printout wenever we create a new Posts
         return "Blog Post " +str(self.id)
+
+
+
+
+class Contacts(db.Model):
+
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100),  nullable=False)
+    email = db.Column(db.String(20),  nullable=False)
+    phone_num = db.Column(db.String(15),  nullable=False)
+    message = db.Column(db.String(200), nullable=False)
+
+
+    def __repr__(self) :  
+
+        return "Contact " +str(self.id)
+
+    
+
 posts=[
     {'name':'rayan',
         'age':22,
@@ -53,9 +74,22 @@ def post():
         all_post=Posts.query.order_by(Posts.date).all()
         return render_template('post.html',all_post=all_post)
 
-@app.route('/contact')
+@app.route('/contact',methods=['GET','POST'])
 def contact():
-    return render_template('contact.html')
+    if request.method=='POST':  
+        contact_name=request.form['cname']
+        contact_email=request.form['cemail']
+        contact_phone=request.form['cphone']
+        conact_message=request.form['cmsg']
+        new_contact=Contacts(name=contact_name,email=contact_email,phone_num=contact_phone,message=conact_message)
+        db.session.add(new_contact)
+        db.session.commit()
+        return redirect('/')
+
+    else:
+        # all_contacts=Contacts.query.order_by(Contacts.name).all()
+
+        return render_template('contact.html')
 
 @app.route('/delete/<int:id>')
 def delete(id):
