@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for info in all_contacts %}
+<br>
+<h5>Name:{{ info.name }}</h5>
+<br>
+<h5>Email:{{ info.email }}</h5>
+<br>
+<h5>Contact Number:{{ info.phone_num }}</h5>
+<br>
+<p>Message:{{ info.message }}</p>
+<hr>
+{% endfor %}
+{% endblock %}

@@ -91,6 +91,11 @@ def contact():
 
         return render_template('contact.html')
 
+@app.route('/contact/info',methods=['GET'])
+def contactinfo():
+    all_contacts=Contacts.query.order_by(Contacts.name).all()
+    return render_template('contactinfo.html',all_contacts=all_contacts)
+
 @app.route('/delete/<int:id>')
 def delete(id):
     post=Posts.query.get_or_404(id)

@@ -1,14 +1,19 @@
 {% extends 'layout.html' %}
 {% block content %}
 	
-	<hr>
-<h2>Contact Me</h2>
+
+ <br>
+<h2 style="display:inline">Contact Me</h2>
+<a  style="display:inline" href="/contact/info" class=" btn btn-success float-right mx-4 ">Contact Info</a>
+<hr>
 <form action="/contact" method="POST">
   <div class="form-group">
+  	
     <div class="col">
       <input type="text" class="form-control" name="cname" id="cname" placeholder="Name" required >
     </div>
     <br>
+
     <div class="col">
       <input type="email"  class="form-control"  name="cemail"  id="cemail"  placeholder="Email" required>
 
