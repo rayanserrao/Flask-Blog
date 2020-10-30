@@ -1,4 +1,4 @@
-from flask import Flask,render_template,redirect,request
+from flask import Flask,render_template,redirect,request,flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pylint_flask
@@ -9,6 +9,8 @@ app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///posts.db'   #confirguring databse with relative path(///)
                                                          #if i give 4 slahesit will be absolute path
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///contacts.db'
+
+app.secret_key="hello"
 
 db = SQLAlchemy(app)  #creating databse
 
@@ -84,6 +86,7 @@ def contact():
         new_contact=Contacts(name=contact_name,email=contact_email,phone_num=contact_phone,message=conact_message)
         db.session.add(new_contact)
         db.session.commit()
+        flash("You'r message has been sent successfully","info")
         return redirect('/')
 
     else:

@@ -1,5 +1,12 @@
 {% extends 'layout.html' %}
 {% block content %}
+{% with messages= get_flashed_messages() %}
+  {% if messsges %}
+      {% for msg in messages %}
+      <p>{{ msg }}</p>
+      {% endfor %}
+  {% endif %}
+{% endwith %}
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
